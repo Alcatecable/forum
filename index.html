@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLint Community Forum - Developer Discussions & Support</title>
+    <meta name="description" content="Join the NeuroLint developer community. Get help, share experiences, discuss code analysis techniques, and connect with fellow developers.">
+    <meta name="keywords" content="developer forum, community, code analysis, React, TypeScript, Next.js, help, discussions, support">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://forum.neurolint.dev/">
+    <meta property="og:title" content="NeuroLint Community Forum">
+    <meta property="og:description" content="Connect with developers, get help, and share your NeuroLint experiences">
+    <meta property="og:image" content="https://forum.neurolint.dev/images/forum-preview.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://forum.neurolint.dev/">
+    <meta property="twitter:title" content="NeuroLint Community Forum">
+    <meta property="twitter:description" content="Join the developer community discussion">
+    <meta property="twitter:image" content="https://forum.neurolint.dev/images/forum-preview.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --blue-lighter: #93c5fd;
+            --background: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #18181b;
+            --surface-3: #27272a;
+            --text: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --border: #27272a;
+            --accent: #22c55e;
+            --warning: #fbbf24;
+            --error: #ef4444;
+            --community-purple: #8b5cf6;
+            --community-orange: #f97316;
+            
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--community-purple), var(--primary-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--community-purple), var(--primary-blue));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            border-color: var(--community-purple);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text), var(--community-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--community-purple);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Forum Preview */
+        .forum-preview {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .forum-header {
+            background: var(--surface-2);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .forum-nav {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .forum-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .forum-nav a.active {
+            background: var(--community-purple);
+            color: white;
+        }
+
+        .forum-nav a:hover:not(.active) {
+            background: var(--surface-3);
+        }
+
+        .forum-content {
+            padding: 1.5rem;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .topic-item:hover {
+            background: var(--surface-2);
+        }
+
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+
+        .topic-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .topic-icon.question {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary-blue);
+        }
+
+        .topic-icon.discussion {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--community-purple);
+        }
+
+        .topic-icon.showcase {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent);
+        }
+
+        .topic-info {
+            flex: 1;
+        }
+
+        .topic-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .topic-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .topic-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            border-color: var(--community-purple);
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .category-icon.help {
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+        }
+
+        .category-icon.general {
+            background: linear-gradient(135deg, var(--community-purple), var(--blue-light));
+        }
+
+        .category-icon.showcase {
+            background: linear-gradient(135deg, var(--accent), var(--community-orange));
+        }
+
+        .category-icon.feature {
+            background: linear-gradient(135deg, var(--warning), var(--community-orange));
+        }
+
+        .category-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Guidelines */
+        .guidelines {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guideline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .guideline-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--community-purple), var(--primary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .guideline-content h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .guideline-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .community-stats {
+                gap: 2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+
+            .topic-item {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Online indicator */
+        .online-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="container">
+            <div class="nav">
+                <a href="https://neurolint.dev" class="logo">
+                    <div class="logo-icon">💬</div>
+                    NeuroLint Forum
+                </a>
+                <ul class="nav-links">
+                    <li><a href="https://neurolint.dev">Home</a></li>
+                    <li><a href="https://app.neurolint.dev">Web App</a></li>
+                    <li><a href="https://docs.neurolint.dev">Docs</a></li>
+                    <li><a href="https://cli.neurolint.dev">CLI</a></li>
+                </ul>
+                <a href="#join" class="btn btn-primary">Join Discussion</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Connect, Learn, Grow Together</h1>
+            <p>Join the NeuroLint community where developers share experiences, get help, and collaborate on better code. Your questions and insights make our community stronger.</p>
+            
+            <div class="hero-actions">
+                <a href="#join" class="btn btn-primary">
+                    <span>🚀</span> Join the Community
+                </a>
+                <a href="#categories" class="btn btn-secondary">
+                    <span>👀</span> Browse Discussions
+                </a>
+            </div>
+
+            <!-- Community Stats -->
+            <div class="community-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2.5K+</span>
+                    <span class="stat-label">Active Members</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">850+</span>
+                    <span class="stat-label">Topics</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3.2K+</span>
+                    <span class="stat-label">Posts</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Questions Answered</span>
+                </div>
+            </div>
+
+            <!-- Forum Preview -->
+            <div class="forum-preview animate-fade-in-up" style="margin-top: 3rem;">
+                <div class="forum-header">
+                    <h3 style="font-size: 1rem; margin: 0;">Recent Discussions</h3>
+                    <div class="forum-nav">
+                        <a href="#" class="active">All</a>
+                        <a href="#">Questions</a>
+                        <a href="#">General</a>
+                        <a href="#">Showcase</a>
+                    </div>
+                </div>
+                <div class="forum-content">
+                    <div class="topic-item">
+                        <div class="topic-icon question">❓</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Best practices for layer selection in large codebases?</div>
+                            <div class="topic-meta">Started by <strong>alex_dev</strong> • 2 hours ago</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>5 replies</span>
+                            <span>23 views</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-icon showcase">✨</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Reduced build time by 40% using NeuroLint in CI/CD</div>
+                            <div class="topic-meta">Started by <strong>sarah_ops</strong> • 5 hours ago</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>12 replies</span>
+                            <span>89 views</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-icon discussion">💭</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Feature request: Custom rule configuration for teams</div>
+                            <div class="topic-meta">Started by <strong>mike_lead</strong> • 1 day ago</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>8 replies</span>
+                            <span>156 views</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-icon question">❓</div>
+                        <div class="topic-info">
+                            <div class="topic-title">How to handle Next.js 14 app router with layer 5?</div>
+                            <div class="topic-meta">Started by <strong>react_ninja</strong> • 2 days ago</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>15 replies</span>
+                            <span>234 views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Discussion Categories</h2>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Find the right place for your questions, insights, and discussions</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon help">❓</div>
+                    <h3>Help & Support</h3>
+                    <p>Get help with NeuroLint usage, troubleshooting, and best practices from the community.</p>
+                    <div class="category-stats">
+                        <span>342 topics</span>
+                        <span><span class="online-indicator"></span>18 online</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon general">💭</div>
+                    <h3>General Discussion</h3>
+                    <p>Share your thoughts, experiences, and engage in conversations about code quality.</p>
+                    <div class="category-stats">
+                        <span>189 topics</span>
+                        <span><span class="online-indicator"></span>12 online</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon showcase">✨</div>
+                    <h3>Show & Tell</h3>
+                    <p>Showcase your projects, success stories, and creative uses of NeuroLint.</p>
+                    <div class="category-stats">
+                        <span>156 topics</span>
+                        <span><span class="online-indicator"></span>8 online</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon feature">💡</div>
+                    <h3>Feature Requests</h3>
+                    <p>Suggest new features, improvements, and vote on community-driven enhancements.</p>
+                    <div class="category-stats">
+                        <span>98 topics</span>
+                        <span><span class="online-indicator"></span>5 online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guidelines Section -->
+    <section class="section" style="background: var(--surface);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Community Guidelines</h2>
+                <p style="color: var(--text-secondary);">Help us maintain a welcoming and productive environment for everyone</p>
+            </div>
+
+            <div class="guidelines">
+                <div class="guideline-item">
+                    <div class="guideline-icon">🤝</div>
+                    <div class="guideline-content">
+                        <h4>Be Respectful & Inclusive</h4>
+                        <p>Treat all community members with respect. We welcome developers of all skill levels and backgrounds.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">🔍</div>
+                    <div class="guideline-content">
+                        <h4>Search Before Posting</h4>
+                        <p>Check if your question has been answered before. Use clear, descriptive titles for new topics.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">💻</div>
+                    <div class="guideline-content">
+                        <h4>Share Code Examples</h4>
+                        <p>When asking for help, include relevant code snippets, error messages, and context.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">🎯</div>
+                    <div class="guideline-content">
+                        <h4>Stay On Topic</h4>
+                        <p>Keep discussions focused on NeuroLint, code analysis, and related development topics.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">🌟</div>
+                    <div class="guideline-content">
+                        <h4>Help Others</h4>
+                        <p>Share your knowledge and experience. Even small contributions make a big difference.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">🚫</div>
+                    <div class="guideline-content">
+                        <h4>No Spam or Self-Promotion</h4>
+                        <p>Avoid excessive self-promotion. Focus on providing value to the community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="join" class="section" style="background: linear-gradient(135deg, var(--community-purple), var(--primary-blue)); color: white;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Ready to Join the Conversation?</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9;">Connect with developers, share your experiences, and grow together as a community</p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://discourse.neurolint.dev" class="btn" style="background: white; color: var(--community-purple);">
+                    Join Forum Now
+                </a>
+                <a href="https://docs.neurolint.dev" class="btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white;">
+                    Read the Docs
+                </a>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 2rem;">
+                <p style="font-size: 0.875rem; margin: 0; opacity: 0.8;">
+                    <strong>Free to join!</strong> No spam, no ads. Just developers helping developers build better code.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NeuroLint Community</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Connect with developers worldwide and grow your skills together.</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="https://github.com/Alcatecable" style="color: var(--text-secondary);">GitHub</a>
+                        <a href="https://discourse.neurolint.dev" style="color: var(--text-secondary);">Forum</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://app.neurolint.dev">Web Application</a></li>
+                        <li><a href="https://vs.neurolint.dev">VS Code Extension</a></li>
+                        <li><a href="https://cli.neurolint.dev">CLI Tool</a></li>
+                        <li><a href="https://docs.neurolint.dev/api">REST API</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://docs.neurolint.dev">Documentation</a></li>
+                        <li><a href="https://docs.neurolint.dev/getting-started">Getting Started</a></li>
+                        <li><a href="https://docs.neurolint.dev/examples">Examples</a></li>
+                        <li><a href="https://docs.neurolint.dev/troubleshooting">Troubleshooting</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://forum.neurolint.dev">Community Forum</a></li>
+                        <li><a href="mailto:founder@neurolint.dev">Contact Support</a></li>
+                        <li><a href="https://app.neurolint.dev/contact">Enterprise</a></li>
+                        <li><a href="https://docs.neurolint.dev/enterprise">Business Plans</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 NeuroLint Community. Built with ❤️ by developers, for developers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(card);
+            });
+
+            // Forum navigation simulation
+            document.querySelectorAll('.forum-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('.forum-nav a').forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Simple animation effect
+                    const content = document.querySelector('.forum-content');
+                    content.style.opacity = '0.5';
+                    setTimeout(() => {
+                        content.style.opacity = '1';
+                    }, 150);
+                });
+            });
+
+            // Add hover effects to topic items
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(4px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+
+            // Simulate online indicator updates
+            setInterval(() => {
+                document.querySelectorAll('.online-indicator').forEach(indicator => {
+                    const currentOpacity = parseFloat(getComputedStyle(indicator).opacity);
+                    if (Math.random() > 0.7) {
+                        indicator.style.animationDuration = `${1 + Math.random()}s`;
+                    }
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
